@@ -3,11 +3,10 @@
 -- does not depend on contents of sha.sql.
 --
 
-SET client_min_messages = warning;
+SET client_min_messages = error;
 \set ECHO none
-\i sql/hashtypes--0.1.2.sql
+create extension hashtypes;
 \set ECHO all
-RESET client_min_messages;
 
 CREATE TABLE sha (one sha1, two sha224);
 CREATE INDEX sha1s_b ON sha (one);
