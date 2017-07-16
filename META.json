@@ -2,7 +2,7 @@
   "name": "hashtypes-aleksabl",
   "abstract": "Data types for sha{1,224,256,384,512}, md5 and crc32.",
   "description": "Data types for hashtypes for optimal storage and performance. Support for indexes (normal btree as well as hash), comparision, min/max, binary export/import, etc. This project is a fork of https://pgxn.org/dist/hashtypes/.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "maintainer": "Aleksander Blomsløld <aleksabl@gmail.com>",
   "license": "postgresql",
   "meta-spec": {
@@ -10,9 +10,9 @@
     "url": "http://pgxn.org/meta/spec.txt"
   },
   "provides": {
-    "hashtypes": {
-      "file": "sql/hashtypes--0.1.2.sql",
-      "version": "0.1.2"
+    "hashtypes-aleksabl": {
+      "file": "sql/hashtypes--0.1.3.sql",
+      "version": "0.1.3"
     }
   },
   "resources": {
