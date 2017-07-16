@@ -7,3 +7,6 @@ sql/hashtypes*.sql*
 .idea
 CMakeLists.txt
 /cmake-build*
+regression.diffs
+regression.out
+results/
