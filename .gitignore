@@ -10,3 +10,5 @@ CMakeLists.txt
 regression.diffs
 regression.out
 results/
+hashtypes-*.zip
+*.swp
