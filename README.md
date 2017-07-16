@@ -1,5 +1,5 @@
 [![PGXN version](https://badge.fury.io/pg/hashtypes-aleksabl.svg)](https://badge.fury.io/pg/hashtypes-aleksabl)
-
+[![Build Status](https://travis-ci.org/aleksabl/hashtypes.svg?branch=master)](https://travis-ci.org/aleksabl/hashtypes)
 # About this project
 This project is a fork of https://github.com/infofarmer/hashtypes. This fork provides the following enhancements:
 
