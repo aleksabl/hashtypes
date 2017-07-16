@@ -17,6 +17,7 @@
 #include "common.h"
 #include "fmgr.h"
 #include "utils/builtins.h"
+#include "libpq/pqformat.h"
 
 #ifndef SHA_LENGTH
 #error No digest length defined
@@ -43,6 +44,8 @@ typedef struct Sha {
 
 #define input_function funcname(sha_in, SHA_NAME)
 #define output_function funcname(sha_out, SHA_NAME)
+#define receive_function funcname(sha_recv, SHA_NAME)
+#define send_function funcname(sha_send, SHA_NAME)
 #define bytea_to_sha_fn funcname(byteasha, SHA_NAME)
 #define sha_to_bytea_fn funcname(shabytea, SHA_NAME)
 #define sha_to_text_fn funcname(shatext, SHA_NAME)
@@ -59,6 +62,8 @@ typedef struct Sha {
 
 Datum input_function(PG_FUNCTION_ARGS);
 Datum output_function(PG_FUNCTION_ARGS);
+Datum receive_function(PG_FUNCTION_ARGS);
+Datum send_function(PG_FUNCTION_ARGS);
 Datum sha_to_text_fn(PG_FUNCTION_ARGS);
 Datum text_to_sha_fn(PG_FUNCTION_ARGS);
 Datum bytea_to_sha_fn(PG_FUNCTION_ARGS);
@@ -71,7 +76,6 @@ Datum gt_function(PG_FUNCTION_ARGS);
 Datum le_function(PG_FUNCTION_ARGS);
 Datum lt_function(PG_FUNCTION_ARGS);
 Datum hash_function(PG_FUNCTION_ARGS);
-
 
 /*
  * Generic SHA input function.
@@ -114,6 +118,31 @@ output_function(PG_FUNCTION_ARGS)
 	Sha    *value = PG_GETARG_SHA(0);
 
 	PG_RETURN_CSTRING(hexarr_to_cstring(value->bytes, SHA_LENGTH));
+}
+
+PG_FUNCTION_INFO_V1(receive_function);
+Datum
+receive_function(PG_FUNCTION_ARGS)
+{
+	StringInfo	buf = (StringInfo) PG_GETARG_POINTER(0);
+	Sha	   		*result;
+	int			nbytes;
+
+	nbytes = buf->len - buf->cursor;
+	// check nbytes == 16
+    result = palloc(sizeof(Sha));
+	pq_copymsgbytes(buf, result->bytes, nbytes);
+
+    PG_RETURN_SHA(result);
+}
+
+PG_FUNCTION_INFO_V1(send_function);
+Datum
+send_function(PG_FUNCTION_ARGS)
+{
+	Sha    *value = PG_GETARG_SHA(0);
+
+	PG_RETURN_BYTEA_P(hexarr_to_bytea(value->bytes, SHA_LENGTH));
 }
 
 PG_FUNCTION_INFO_V1(sha_to_text_fn);
