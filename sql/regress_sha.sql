@@ -22,6 +22,7 @@ SET enable_seqscan TO off;
 SELECT two FROM sha WHERE one = 'da39a3ee5e6b4b0d3255bfef95601890afd80709';
 SELECT text(one) FROM sha WHERE two <> 'a1fcbaf07c898aa590c6f3169eef115da1a1f6521921919bee973da9';
 SELECT text(one) FROM sha WHERE one >= '0000000000000000000000000000000000000000';
+SELECT min(one), max(one), min(two), max(two) FROM sha;
 
 CREATE TABLE md5test (val md5hash);
 CREATE INDEX md5_id1 ON md5test (val);
@@ -32,4 +33,4 @@ INSERT INTO md5test VALUES (md5('test')), (md5('another test'));
 SELECT val FROM md5test WHERE val <> md5('another test')::md5hash;
 SELECT val FROM md5test WHERE val = md5('another test')::md5hash; 
 SELECT text(val) FROM md5test WHERE val < 'ffffffffffffffffffffffffffffffff';
-
+SELECT min(val), max(val) FROM md5test;

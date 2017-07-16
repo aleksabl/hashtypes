@@ -30,6 +30,12 @@ SELECT text(one) FROM sha WHERE one >= '0000000000000000000000000000000000000000
  b262b078c9ec2797ad8980208ff773384d6bed9c
 (3 rows)
 
+SELECT min(one), max(one), min(two), max(two) FROM sha;
+                   min                    |                   max                    |                           min                            |                           max                            
+------------------------------------------+------------------------------------------+----------------------------------------------------------+----------------------------------------------------------
+ b262b078c9ec2797ad8980208ff773384d6bed9c | da39a3ee5e6b4b0d3255bfef95601890afd80709 | 35aec750369ad69194f076f675afae3872e8d1a5f3b6c68ec3f9278f | d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f
+(1 row)
+
 CREATE TABLE md5test (val md5hash);
 CREATE INDEX md5_id1 ON md5test (val);
 CREATE INDEX md5_id2 ON md5test USING hash(val);
@@ -52,4 +58,10 @@ SELECT text(val) FROM md5test WHERE val < 'ffffffffffffffffffffffffffffffff';
  098f6bcd4621d373cade4e832627b4f6
  5e8862cd73694287ff341e75c95e3c6a
 (2 rows)
+
+SELECT min(val), max(val) FROM md5test;
+               min                |               max                
+----------------------------------+----------------------------------
+ 098f6bcd4621d373cade4e832627b4f6 | 5e8862cd73694287ff341e75c95e3c6a
+(1 row)
 
