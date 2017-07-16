@@ -1,4 +1,6 @@
-This extension is actually a fork of shatypes[1] which adds some other data types
-as crc32 and provides some fixes to original implementations.
+This project is a fork of https://github.com/infofarmer/hashtypes. This fork provides the following enhancements:
 
-[1]: http://pgfoundry.org/projects/shatypes
+* Support for BINARY export/import
+* Support for aggregate functions (min/max)
+* Fixed versioning with regards to PGXN
+* Some performance enhancements
