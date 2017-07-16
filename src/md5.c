@@ -10,7 +10,6 @@
 
 #include "access/hash.h"
 #include "common.h"
-#include "fmgr.h"
 #include "utils/builtins.h"
 #include "libpq/pqformat.h"
 
