@@ -1,7 +1,7 @@
 {
   "name": "hashtypes",
   "abstract": "data types for sha{1,256,512}, md5 and crc32",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "maintainer": "Andrey Popp <8mayday@gmail.com>",
   "license": "postgresql",
   "meta-spec": {
@@ -10,8 +10,8 @@
   },
   "provides": {
     "hashtypes": {
-      "file": "sql/hashtypes--0.1.sql",
-      "version": "0.1.0"
+      "file": "sql/hashtypes--0.1.2.sql",
+      "version": "0.1.2"
     }
   },
   "resources": {

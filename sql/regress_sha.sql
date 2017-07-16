@@ -5,7 +5,7 @@
 
 SET client_min_messages = warning;
 \set ECHO none
-\i sql/hashtypes--0.1.sql
+\i sql/hashtypes--0.1.2.sql
 \set ECHO all
 RESET client_min_messages;
 
