@@ -89,7 +89,7 @@ cstring_to_hexarr(char *arg, int length, char *hashname)
 
 	if (filled != length)
 		ereport(ERROR,
-				(errmsg("invalid MD5 data: not enough digits (got %d, expected %d)",
+				(errmsg("invalid %s data: not enough digits (got %d, expected %d)", hashname,
 						filled * 2, length * 2)));
 
 	return output;
