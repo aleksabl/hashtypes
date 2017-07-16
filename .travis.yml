@@ -1,0 +1,33 @@
+sudo: required
+language: c
+
+env:
+  - PGVERSION=9.5
+  - PGVERSION=9.6
+
+before_install:
+  - wget https://gist.github.com/petere/5893799/raw/apt.postgresql.org.sh
+  - sudo sh ./apt.postgresql.org.sh
+
+install:
+  - packages="postgresql-$PGVERSION postgresql-server-dev-$PGVERSION"
+  - sudo service postgresql stop
+  - echo 'exit 0' | sudo tee /etc/init.d/postgresql
+  - sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install $packages
+
+before_script:
+  - sudo /etc/init.d/postgresql restart
+  - sudo chmod a+x /etc/init.d/postgresql
+  - sudo pg_dropcluster --stop $PGVERSION main
+  - sudo pg_dropcluster --stop 9.1 main || true
+  - sudo pg_dropcluster --stop 9.2 main || true
+  - sudo pg_dropcluster --stop 9.3 main || true
+  - sudo pg_dropcluster --stop 9.4 main || true
+  - sudo pg_dropcluster --stop 9.5 main || true
+  - sudo pg_dropcluster --stop 9.6 main || true
+  - sudo pg_createcluster --start $PGVERSION hashtypes -p 5432
+  - sudo make install
+
+script:
+  - sudo chmod a+w -R .
+  - sudo -u postgres make installcheck
