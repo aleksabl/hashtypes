@@ -58,6 +58,8 @@ typedef struct Sha {
 #define le_function funcname(sha_le, SHA_NAME)
 #define lt_function funcname(sha_lt, SHA_NAME)
 #define hash_function funcname(sha_hash, SHA_NAME)
+#define min_function funcname(sha_min, SHA_NAME)
+#define max_function funcname(sha_max, SHA_NAME)
 
 
 Datum input_function(PG_FUNCTION_ARGS);
@@ -76,6 +78,8 @@ Datum gt_function(PG_FUNCTION_ARGS);
 Datum le_function(PG_FUNCTION_ARGS);
 Datum lt_function(PG_FUNCTION_ARGS);
 Datum hash_function(PG_FUNCTION_ARGS);
+Datum min_function(PG_FUNCTION_ARGS);
+Datum max_function(PG_FUNCTION_ARGS);
 
 /*
  * Generic SHA input function.
@@ -265,4 +269,28 @@ hash_function(PG_FUNCTION_ARGS)
 	Sha    *a = PG_GETARG_SHA(0);
 
 	PG_RETURN_INT32(DatumGetInt32(hash_any(a->bytes, SHA_LENGTH)));
+}
+
+PG_FUNCTION_INFO_V1(min_function);
+Datum
+min_function(PG_FUNCTION_ARGS)
+{
+    Sha   *a = PG_GETARG_SHA(0);
+    Sha   *b = PG_GETARG_SHA(1);
+    if(hexarr_cmp_int(a->bytes, b->bytes, SHA_LENGTH) < 0) {
+        PG_RETURN_SHA(a);
+    }
+    PG_RETURN_SHA(b);
+}
+
+PG_FUNCTION_INFO_V1(max_function);
+Datum
+max_function(PG_FUNCTION_ARGS)
+{
+    Sha   *a = PG_GETARG_SHA(0);
+    Sha   *b = PG_GETARG_SHA(1);
+    if(hexarr_cmp_int(a->bytes, b->bytes, SHA_LENGTH) > 0) {
+        PG_RETURN_SHA(a);
+    }
+    PG_RETURN_SHA(b);
 }

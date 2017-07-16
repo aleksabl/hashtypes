@@ -16,6 +16,8 @@ CREATE FUNCTION md5_gt(md5hash, md5hash) RETURNS bool IMMUTABLE LANGUAGE c STRIC
 CREATE FUNCTION md5_le(md5hash, md5hash) RETURNS bool IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_le';
 CREATE FUNCTION md5_lt(md5hash, md5hash) RETURNS bool IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_lt';
 CREATE FUNCTION md5_hash(md5hash) RETURNS int IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_hash';
+CREATE FUNCTION md5_min (md5hash, md5hash) RETURNS md5hash IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_min';
+CREATE FUNCTION md5_max (md5hash, md5hash) RETURNS md5hash IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_max';
 
 CREATE OPERATOR <> ( PROCEDURE = md5_ne,
 	LEFTARG = md5hash, RIGHTARG = md5hash,
@@ -52,3 +54,6 @@ CREATE FUNCTION md5b(bytea) RETURNS md5hash IMMUTABLE LANGUAGE C STRICT AS 'hash
 CREATE CAST (bytea AS md5hash) WITH FUNCTION md5b(bytea) AS ASSIGNMENT;
 CREATE FUNCTION bytea(md5hash) RETURNS bytea IMMUTABLE LANGUAGE C STRICT AS 'hashtypes', 'md5_to_bytea';
 CREATE CAST (md5hash AS bytea) WITH FUNCTION bytea(md5hash) AS ASSIGNMENT;
+
+CREATE AGGREGATE min(md5hash) (sfunc=md5_min, stype=md5hash, sortop="<");
+CREATE AGGREGATE max(md5hash) (sfunc=md5_max, stype=md5hash, sortop=">");

@@ -41,6 +41,7 @@ Datum md5_gt(PG_FUNCTION_ARGS);
 Datum md5_le(PG_FUNCTION_ARGS);
 Datum md5_lt(PG_FUNCTION_ARGS);
 Datum md5_hash(PG_FUNCTION_ARGS);
+Datum md5_min(PG_FUNCTION_ARGS);
 
 
 /*
@@ -233,4 +234,28 @@ md5_hash(PG_FUNCTION_ARGS)
 	Md5    *a = PG_GETARG_MD5(0);
 
 	PG_RETURN_INT32(DatumGetInt32(hash_any(a->bytes, MD5_LENGTH)));
+}
+
+PG_FUNCTION_INFO_V1(md5_min);
+Datum
+md5_min(PG_FUNCTION_ARGS)
+{
+    Md5   *a = PG_GETARG_MD5(0);
+    Md5   *b = PG_GETARG_MD5(1);
+    if(hexarr_cmp_int(a->bytes, b->bytes, MD5_LENGTH) < 0) {
+        PG_RETURN_MD5(a);
+    }
+    PG_RETURN_MD5(b);
+}
+
+PG_FUNCTION_INFO_V1(md5_max);
+Datum
+md5_max(PG_FUNCTION_ARGS)
+{
+    Md5   *a = PG_GETARG_MD5(0);
+    Md5   *b = PG_GETARG_MD5(1);
+    if(hexarr_cmp_int(a->bytes, b->bytes, MD5_LENGTH) > 0) {
+        PG_RETURN_MD5(a);
+    }
+    PG_RETURN_MD5(b);
 }
