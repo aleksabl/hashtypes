@@ -3,3 +3,7 @@
 sha*.sql.in
 sha*.sql
 sha*.c
+sql/hashtypes*.sql*
+.idea
+CMakeLists.txt
+/cmake-build*
