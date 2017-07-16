@@ -135,7 +135,7 @@ receive_function(PG_FUNCTION_ARGS)
 	nbytes = buf->len - buf->cursor;
 	// check nbytes == 16
     result = palloc(sizeof(Sha));
-	pq_copymsgbytes(buf, result->bytes, nbytes);
+	pq_copymsgbytes(buf, (char *) result->bytes, nbytes);
 
     PG_RETURN_SHA(result);
 }
