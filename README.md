@@ -1,4 +1,4 @@
-#About this project
+# About this project
 This project is a fork of https://github.com/infofarmer/hashtypes. This fork provides the following enhancements:
 
 * Support for BINARY export/import
@@ -7,13 +7,13 @@ This project is a fork of https://github.com/infofarmer/hashtypes. This fork pro
 * Some performance enhancements
 
 
-#Installation
+# Installation
 The easiest way to get started with this project is to use PGXN.
 
 First: Install pgxn (`sudo apt install pgxnclient` or similar for other distros). Then run
 `sudo pgxnclient install aleksabl-hashtypes`.
 
-#Use
+# Use
 
 Connect to the database you want. First you need to install the extension for the current database: `CREATE EXTENSION hashtypes`.
 
