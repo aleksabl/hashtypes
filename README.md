@@ -1,3 +1,5 @@
+[![PGXN version](https://badge.fury.io/pg/hashtypes-aleksabl.svg)](https://badge.fury.io/pg/hashtypes-aleksabl)
+
 # About this project
 This project is a fork of https://github.com/infofarmer/hashtypes. This fork provides the following enhancements:
 
