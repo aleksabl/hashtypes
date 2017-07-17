@@ -49,9 +49,9 @@ get_hex(char c)
  * bytes
  */
 unsigned char *
-cstring_to_hexarr(char *arg, int length, char *hashname)
+cstring_to_hexarr(const char *arg, int length, const char *hashname)
 {
-	char   *a,
+	const char   *a,
 		   *argend;
 	char	v1,
 			v2;
@@ -96,7 +96,7 @@ cstring_to_hexarr(char *arg, int length, char *hashname)
 }
 
 unsigned char *
-text_to_hexarr(text *arg, int length, char *hashname)
+text_to_hexarr(text *arg, int length, const char *hashname)
 {
 	int		txtsz;
 	char   *bytes;
@@ -118,7 +118,7 @@ text_to_hexarr(text *arg, int length, char *hashname)
 
 /* non-SQL-callable function for converting any digest value into a C-String */
 char *
-hexarr_to_cstring(unsigned char *value, int length)
+hexarr_to_cstring(const unsigned char *value, int length)
 {
 	char   *output;
 	int		outlen = length * 2 + 1;
@@ -145,7 +145,7 @@ hexarr_to_cstring(unsigned char *value, int length)
 
 /* Non-SQL-callable comparison function */
 int
-hexarr_cmp_int(unsigned char *a, unsigned char *b, int length)
+hexarr_cmp_int(const unsigned char *a, const unsigned char *b, int length)
 {
 	int	i;
 
@@ -161,7 +161,7 @@ hexarr_cmp_int(unsigned char *a, unsigned char *b, int length)
 }
 
 bytea *
-hexarr_to_bytea(unsigned char *value, int length)
+hexarr_to_bytea(const unsigned char *value, int length)
 {
 	bytea  *output;
 
