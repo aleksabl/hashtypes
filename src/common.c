@@ -49,7 +49,7 @@ get_hex(char c)
  * bytes
  */
 unsigned char *
-cstring_to_hexarr(const char *arg, int length, const char *hashname)
+cstring_to_hexarr(const char *arg, Size length, const char *hashname)
 {
 	const char   *a,
 		   *argend;
@@ -82,23 +82,23 @@ cstring_to_hexarr(const char *arg, int length, const char *hashname)
 		filled++;
 		if (filled > length)
 			ereport(ERROR,
-					(errmsg("invalid %s data: too many digits (expected %d)",
+					(errmsg("invalid %s data: too many digits (expected %lu)",
 							hashname, length * 2)));
-		*p++ = v1 | v2;
+		*p++ = (unsigned char) (v1 | v2);
 	}
 
 	if (filled != length)
 		ereport(ERROR,
-				(errmsg("invalid %s data: not enough digits (got %d, expected %d)", hashname,
+				(errmsg("invalid %s data: not enough digits (got %d, expected %lu)", hashname,
 						filled * 2, length * 2)));
 
 	return output;
 }
 
 unsigned char *
-text_to_hexarr(text *arg, int length, const char *hashname)
+text_to_hexarr(text *arg, Size length, const char *hashname)
 {
-	int		txtsz;
+    Size	txtsz;
 	char   *bytes;
 	unsigned char *value;
 
@@ -118,10 +118,10 @@ text_to_hexarr(text *arg, int length, const char *hashname)
 
 /* non-SQL-callable function for converting any digest value into a C-String */
 char *
-hexarr_to_cstring(const unsigned char *value, int length)
+hexarr_to_cstring(const unsigned char *value, Size length)
 {
 	char   *output;
-	int		outlen = length * 2 + 1;
+    Size	outlen = length * 2 + 1;
 	int		c;
 	int		offset;
 
@@ -145,7 +145,7 @@ hexarr_to_cstring(const unsigned char *value, int length)
 
 /* Non-SQL-callable comparison function */
 int
-hexarr_cmp_int(const unsigned char *a, const unsigned char *b, int length)
+hexarr_cmp_int(const unsigned char *a, const unsigned char *b, Size length)
 {
 	int	i;
 
@@ -161,7 +161,7 @@ hexarr_cmp_int(const unsigned char *a, const unsigned char *b, int length)
 }
 
 bytea *
-hexarr_to_bytea(const unsigned char *value, int length)
+hexarr_to_bytea(const unsigned char *value, Size length)
 {
 	bytea  *output;
 
