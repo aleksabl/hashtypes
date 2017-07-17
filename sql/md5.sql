@@ -7,7 +7,8 @@ CREATE FUNCTION md5_in (cstring) RETURNS md5hash IMMUTABLE LANGUAGE c STRICT AS 
 CREATE FUNCTION md5_out (md5hash) RETURNS cstring IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_out';
 CREATE FUNCTION md5_recv (internal) RETURNS md5hash IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_recv';
 CREATE FUNCTION md5_send (md5hash) RETURNS bytea IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_send';
-CREATE TYPE md5hash ( INPUT = md5_in, OUTPUT = md5_out, SEND = md5_send, RECEIVE = md5_recv, CATEGORY = 'S', INTERNALLENGTH = 16);
+CREATE TYPE md5hash ( INPUT = md5_in, OUTPUT = md5_out, SEND = md5_send, RECEIVE = md5_recv,
+    CATEGORY = 'S', STORAGE = plain, INTERNALLENGTH = 16);
 CREATE FUNCTION md5_cmp(md5hash, md5hash) RETURNS int4 IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_cmp';
 CREATE FUNCTION md5_eq(md5hash, md5hash) RETURNS bool IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_eq';
 CREATE FUNCTION md5_ne(md5hash, md5hash) RETURNS bool IMMUTABLE LANGUAGE c STRICT AS 'hashtypes', 'md5_ne';
