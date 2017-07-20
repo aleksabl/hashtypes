@@ -96,24 +96,48 @@ cstring_to_hexarr(const char *arg, Size length, const char *hashname)
 }
 
 unsigned char *
-text_to_hexarr(text *arg, Size length, const char *hashname)
+text_to_hexarr(const text *arg, Size length, const char *hashname)
 {
-    Size	txtsz;
-	char   *bytes;
-	unsigned char *value;
+    const Size	txtsz  = VARSIZE(arg) - VARHDRSZ;
+    const char *in = VARDATA(arg); //Not null-terminated!
+    unsigned char *output = palloc0(length);
 
-	/*
-	 * NOTE: we'd love to pass VARDATA(arg) to cstring_to_hexarr directly, but
-	 * but it's possible that it's not NUL-terminated so we must create a copy.
-	 */
-	txtsz = VARSIZE(arg) - VARHDRSZ;
-	bytes = palloc(txtsz + 1);
-	memcpy(bytes, VARDATA(arg), txtsz);
-	bytes[txtsz] = '\0';
-	value = cstring_to_hexarr(bytes, length, hashname);
-	pfree(bytes);
+    const char *inend = in + txtsz;
+    char	v1,
+            v2;
+    unsigned char   *p;
+    int		filled;
 
-	return value;
+    p = output;
+    filled = 0;
+    while (in < inend)
+    {
+        if (*in == ' ' || *in == '\n' || *in == '\t' || *in == '\r')
+        {
+            in++;
+            continue;
+        }
+        v1 = get_hex(*in++) << 4;
+        if (in >= inend)
+            ereport(ERROR,
+                    (errcode(ERRCODE_INVALID_PARAMETER_VALUE),
+                            errmsg("invalid %s data: odd number of digits", hashname)));
+
+        v2 = get_hex(*in++);
+        filled++;
+        if (filled > length)
+            ereport(ERROR,
+                    (errmsg("invalid %s data: too many digits (expected %lu)",
+                            hashname, length * 2)));
+        *p++ = (unsigned char) (v1 | v2);
+    }
+
+    if (filled != length)
+        ereport(ERROR,
+                (errmsg("invalid %s data: not enough digits (got %d, expected %lu)", hashname,
+                        filled * 2, length * 2)));
+
+    return output;
 }
 
 /* non-SQL-callable function for converting any digest value into a C-String */
