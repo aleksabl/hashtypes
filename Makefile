@@ -17,6 +17,17 @@ LN_SOURCES = $(subst .o,.c,$(LN_OBJS))
 PGXS := $(shell $(PG_CONFIG) --pgxs)
 include $(PGXS)
 
+ifeq ($(shell test $(VERSION_NUM) -lt 90600; echo $$?),0)
+REGRESS := $(filter-out parallel_test, $(REGRESS))
+endif
+
+ifeq ($(shell test $(VERSION_NUM) -ge 90600; echo $$?),0)
+  	ALTEROP = alter_op
+else
+	ALTEROP = no_alter_op
+endif
+
+
 $(LN_SOURCES) : % : src/sha.c
 	rm -f $@ && $(LN_S) $(notdir $<) $@
 
