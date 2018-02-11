@@ -31,5 +31,6 @@ before_script:
   - sudo make install
 
 script:
-  - sudo chmod a+w -R .
+  - sudo chmod a+rwX -R .
+  - sudo chmod a+X /home/travis 
   - sudo -u postgres make installcheck
