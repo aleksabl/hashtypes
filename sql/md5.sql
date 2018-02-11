@@ -58,3 +58,30 @@ CREATE CAST (md5hash AS bytea) WITH FUNCTION bytea(md5hash) AS ASSIGNMENT;
 
 CREATE AGGREGATE min(md5hash) (sfunc=md5_min, stype=md5hash, sortop="<");
 CREATE AGGREGATE max(md5hash) (sfunc=md5_max, stype=md5hash, sortop=">");
+
+DO $$
+DECLARE version_num integer;
+BEGIN
+ SELECT current_setting('server_version_num') INTO STRICT version_num;
+ IF version_num > 90600 THEN
+  EXECUTE $E$ ALTER FUNCTION md5_in(cstring) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_out(md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_recv(internal) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_send(md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_cmp(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_eq(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_ne(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_ge(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_gt(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_le(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_lt(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_hash(md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_min(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5_max(md5hash,md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION text(md5hash) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5t(text) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION md5b(bytea) PARALLEL SAFE $E$;
+  EXECUTE $E$ ALTER FUNCTION bytea(md5hash) PARALLEL SAFE $E$;
+ END IF;
+END;
+$$;
