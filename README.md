@@ -6,6 +6,7 @@ This project is a fork of https://github.com/infofarmer/hashtypes. This fork pro
 * Support for BINARY export/import
 * Support for aggregate functions (min/max)
 * Fixed versioning with regards to PGXN
+* Support for parallelism (for Postgresql 9.6+)
 * Some performance enhancements
 
 
