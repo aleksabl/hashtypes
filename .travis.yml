@@ -1,40 +1,70 @@
 sudo: required
+dist: xenial
 language: c
-
-env:
-  - PGVERSION=9.3
-  - PGVERSION=9.4
-  - PGVERSION=9.5
-  - PGVERSION=9.6
-  - PGVERSION=10
-  - PGVERSION=11
-
-before_install:
-  - wget https://gist.github.com/petere/5893799/raw/apt.postgresql.org.sh
-  - sudo sh ./apt.postgresql.org.sh
-
-install:
-  - packages="postgresql-$PGVERSION postgresql-server-dev-$PGVERSION"
-  - sudo service postgresql stop
-  - echo 'exit 0' | sudo tee /etc/init.d/postgresql
-  - sudo apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install $packages
-
-before_script:
-  - sudo /etc/init.d/postgresql restart
-  - sudo chmod a+x /etc/init.d/postgresql
-  - sudo pg_dropcluster --stop $PGVERSION main
-  - sudo pg_dropcluster --stop 9.1 main || true
-  - sudo pg_dropcluster --stop 9.2 main || true
-  - sudo pg_dropcluster --stop 9.3 main || true
-  - sudo pg_dropcluster --stop 9.4 main || true
-  - sudo pg_dropcluster --stop 9.5 main || true
-  - sudo pg_dropcluster --stop 9.6 main || true
-  - sudo pg_dropcluster --stop 10 main || true
-  - sudo pg_dropcluster --stop 11 main || true
-  - sudo pg_createcluster --start $PGVERSION hashtypes -p 5432
-  - sudo make install
-
+matrix:
+   include:
+     - addons: 
+          postgresql: 9.3
+          apt:
+            packages:
+               - postgresql-9.3
+               - postgresql-client-9.3
+               - postgresql-server-dev-9.3
+       env:
+          - POSTGRESQL=9.3
+          - PGPORT=5433
+       install:
+           - sudo make install
+     - addons: 
+          postgresql: 9.4
+          apt:
+            packages:
+               - postgresql-server-dev-9.4
+       env:
+          - POSTGRESQL=9.4
+       install:
+           - sudo make install
+     - addons: 
+          postgresql: 9.5
+          apt:
+            packages:
+               - postgresql-server-dev-9.5
+       env:
+          - POSTGRESQL=9.5
+       install:
+           - sudo make install
+     - addons:
+          postgresql: 9.6
+          apt:
+            packages:
+               - postgresql-server-dev-9.6
+       env:
+          - POSTGRESQL=9.6
+       install:
+           - sudo make install
+     - addons:
+          postgresql: 10
+          apt:
+            packages:
+               - postgresql-server-dev-10
+       env:
+          - POSTGRESQL=10
+       install:
+           - sudo make install
+     - addons:
+          postgresql: 11
+          apt:
+            packages:
+               - postgresql-11
+               - postgresql-client-11
+               - postgresql-server-dev-11
+       env:
+          - POSTGRESQL=11
+          - PGPORT=5433
+       install:
+         - sudo make install
 script:
-  - sudo chmod a+rwX -R .
-  - sudo chmod a+X /home/travis 
-  - sudo -u postgres make installcheck
+  - make installcheck
+after_failure:
+  - cat regression.diffs
+
