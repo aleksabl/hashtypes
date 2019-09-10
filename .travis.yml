@@ -4,18 +4,6 @@ language: c
 matrix:
    include:
      - addons: 
-          postgresql: 9.3
-          apt:
-            packages:
-               - postgresql-9.3
-               - postgresql-client-9.3
-               - postgresql-server-dev-9.3
-       env:
-          - POSTGRESQL=9.3
-          - PGPORT=5433
-       install:
-           - sudo make install
-     - addons: 
           postgresql: 9.4
           apt:
             packages:
