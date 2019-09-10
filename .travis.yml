@@ -7,6 +7,7 @@ env:
   - PGVERSION=9.5
   - PGVERSION=9.6
   - PGVERSION=10
+  - PGVERSION=11
 
 before_install:
   - wget https://gist.github.com/petere/5893799/raw/apt.postgresql.org.sh
@@ -29,6 +30,7 @@ before_script:
   - sudo pg_dropcluster --stop 9.5 main || true
   - sudo pg_dropcluster --stop 9.6 main || true
   - sudo pg_dropcluster --stop 10 main || true
+  - sudo pg_dropcluster --stop 11 main || true
   - sudo pg_createcluster --start $PGVERSION hashtypes -p 5432
   - sudo make install
 
