@@ -54,5 +54,5 @@ matrix:
 script:
   - make installcheck
 after_failure:
-  - cat regression.diffs
+  - cat ~/hashtypes/regression.diffs ~/hashtypes/regression.out
 
