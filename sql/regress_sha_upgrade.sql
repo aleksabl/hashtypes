@@ -9,7 +9,7 @@ SET client_min_messages = error;
 drop extension if exists hashtypes cascade;;
 drop schema public cascade;
 create schema public;
-CREATE EXTENSION hashtypes version '0.1.2';
+CREATE EXTENSION hashtypes version '0.1.4';
 ALTER EXTENSION hashtypes update;
 --set client_min_messages = 'notice';
 \set VERBOSITY default
