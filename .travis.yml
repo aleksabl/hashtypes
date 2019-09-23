@@ -48,9 +48,21 @@ matrix:
                - postgresql-server-dev-11
        env:
           - POSTGRESQL=11
+       install:
+         - sudo make install
+     - addons:
+          postgresql: 12
+          apt:
+            packages:
+               - postgresql-12
+               - postgresql-client-12
+               - postgresql-server-dev-12
+       env:
+          - POSTGRESQL=12
           - PGPORT=5433
        install:
          - sudo make install
+
 script:
   - make installcheck
 after_failure:
