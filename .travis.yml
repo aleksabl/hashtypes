@@ -1,12 +1,13 @@
-sudo: required
+os: linux
 dist: focal
 language: c
-before_script:
+
+before_install:
   - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8
   - echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" | sudo tee -a /etc/apt/sources.list
-  - apt update
+  - sudo apt update
 
-matrix:
+jobs:
    include:
      - addons: 
           postgresql: 9.4
