@@ -2,16 +2,14 @@ os: linux
 dist: focal
 language: c
 
-before_install:
-  - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7FCC7D46ACCC4CF8
-  - echo "deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main" | sudo tee -a /etc/apt/sources.list
-  - sudo apt update
-
 jobs:
    include:
      - addons: 
           postgresql: 9.4
           apt:
+            sources:
+               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
             packages:
                - postgresql-server-dev-9.4
        env:
@@ -21,6 +19,10 @@ jobs:
      - addons: 
           postgresql: 9.5
           apt:
+             sources:
+               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
+
             packages:
                - postgresql-server-dev-9.5
        env:
@@ -30,6 +32,9 @@ jobs:
      - addons:
           postgresql: 9.6
           apt:
+            sources:
+               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
             packages:
                - postgresql-server-dev-9.6
        env:
@@ -48,6 +53,9 @@ jobs:
      - addons:
           postgresql: 11
           apt:
+            sources:
+               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
             packages:
                - postgresql-11
                - postgresql-client-11
@@ -59,6 +67,9 @@ jobs:
      - addons:
           postgresql: 12
           apt:
+            sources:
+               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
             packages:
                - postgresql-12
                - postgresql-client-12
