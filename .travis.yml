@@ -3,86 +3,84 @@ dist: focal
 language: c
 
 jobs:
-   include:
-     - addons: 
-          postgresql: 9.4
-          apt:
-            sources:
-               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
-            packages:
-               - postgresql-server-dev-9.4
-       env:
-          - POSTGRESQL=9.4
-       install:
-           - sudo make install
-     - addons: 
-          postgresql: 9.5
-          apt:
-             sources:
-               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
-
-            packages:
-               - postgresql-server-dev-9.5
-       env:
-          - POSTGRESQL=9.5
-       install:
-           - sudo make install
-     - addons:
-          postgresql: 9.6
-          apt:
-            sources:
-               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
-            packages:
-               - postgresql-server-dev-9.6
-       env:
-          - POSTGRESQL=9.6
-       install:
-           - sudo make install
-     - addons:
-          postgresql: 10
-          apt:
-            packages:
-               - postgresql-server-dev-10
-       env:
-          - POSTGRESQL=10
-       install:
-           - sudo make install
-     - addons:
-          postgresql: 11
-          apt:
-            sources:
-               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
-            packages:
-               - postgresql-11
-               - postgresql-client-11
-               - postgresql-server-dev-11
-       env:
-          - POSTGRESQL=11
-       install:
-         - sudo make install
-     - addons:
-          postgresql: 12
-          apt:
-            sources:
-               - sourceline: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
-               - key_url: http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
-            packages:
-               - postgresql-12
-               - postgresql-client-12
-               - postgresql-server-dev-12
-       env:
-          - POSTGRESQL=12
-          - PGPORT=5433
-       install:
-         - sudo make install
+  include:
+    - addons:
+        postgresql: 9.4
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
+          key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+          packages:
+            - postgresql-server-dev-9.4
+      env:
+        - POSTGRESQL=9.4
+      install:
+        - sudo make install
+    - addons:
+        postgresql: 9.5
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
+            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+          packages:
+            - postgresql-server-dev-9.5
+      env:
+        - POSTGRESQL=9.5
+      install:
+        - sudo make install
+    - addons:
+        postgresql: 9.6
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
+            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+          packages:
+            - postgresql-server-dev-9.6
+      env:
+        - POSTGRESQL=9.6
+      install:
+        - sudo make install
+    - addons:
+        postgresql: 10
+        apt:
+          packages:
+            - postgresql-server-dev-10
+      env:
+        - POSTGRESQL=10
+      install:
+        - sudo make install
+    - addons:
+        postgresql: 11
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
+            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+          packages:
+            - postgresql-11
+            - postgresql-client-11
+            - postgresql-server-dev-11
+      env:
+        - POSTGRESQL=11
+      install:
+        - sudo make install
+    - addons:
+        postgresql: 12
+        apt:
+          sources:
+            - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
+            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+          packages:
+            - postgresql-12
+            - postgresql-client-12
+            - postgresql-server-dev-12
+      env:
+        - POSTGRESQL=12
+        - PGPORT=5433
+      install:
+        - sudo make install
 
 script:
   - make installcheck
 after_failure:
   - cat regression.diffs
   - cat regression.out
-
