@@ -9,7 +9,7 @@ jobs:
         apt:
           sources:
             - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
-          key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+              key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
           packages:
             - postgresql-server-dev-9.4
       env:
@@ -21,7 +21,7 @@ jobs:
         apt:
           sources:
             - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
-            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+              key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
           packages:
             - postgresql-server-dev-9.5
       env:
@@ -33,7 +33,7 @@ jobs:
         apt:
           sources:
             - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
-            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+              key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
           packages:
             - postgresql-server-dev-9.6
       env:
@@ -54,7 +54,7 @@ jobs:
         apt:
           sources:
             - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
-            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+              key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
           packages:
             - postgresql-11
             - postgresql-client-11
@@ -68,7 +68,7 @@ jobs:
         apt:
           sources:
             - sourceline: 'deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main'
-            - key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
+              key_url: 'http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc'
           packages:
             - postgresql-12
             - postgresql-client-12
